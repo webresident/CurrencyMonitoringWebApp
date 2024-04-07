@@ -50,15 +50,12 @@ namespace CurrencyMonitoringWebApp.Controllers
 
         public IActionResult Index(string? fromCurrency, string? toCurrency)
         {
-            IQueryable<CurrencyExchange> currencyExchanges = _context.CurrencyExchanges;
-
             List<Currency> fromCurrencies = _context.Currencies.Where(c => c.Id == "EUR").ToList();
             List<Currency> toCurrencies = _context.Currencies.ToList();
             toCurrencies.RemoveAll(c => c.Id == "EUR");
 
-            CurrencyExchangeViewModel viewModel = new CurrencyExchangeViewModel()
+            CurrencyViewModel viewModel = new CurrencyViewModel()
             {
-                CurrencyExchanges = currencyExchanges.ToList(),
                 FromCurrencies = new SelectList(fromCurrencies, "Id", "Description", fromCurrency),
                 ToCurrencies = new SelectList(toCurrencies, "Id", "Description", toCurrency)
             };
