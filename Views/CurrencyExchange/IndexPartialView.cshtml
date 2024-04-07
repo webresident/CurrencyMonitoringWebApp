@@ -1,0 +1,13 @@
+﻿@model IEnumerable<CurrencyMonitoringWebApp.Models.CurrencyExchange>
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@Convert.ToDateTime(@item.ExchangeDate).ToString("yyyy-MM-dd")</td>
+        <td>@item.FromCurrency</td>
+        <td>@item.ToCurrency</td>
+        <td>@item.ExchangeRate</td>
+    </tr>
+
+}

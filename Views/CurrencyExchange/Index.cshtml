@@ -1,0 +1,53 @@
+﻿@model CurrencyMonitoringWebApp.ViewModels.CurrencyExchangeViewModel
+
+
+<style type="text/css">
+    td {
+        border-style: solid;
+        border-width: 1px;
+        text-align: center;
+        padding: 2px 5px;
+    }
+</style>
+
+<form method="get">
+    <div>
+
+        <label>From</label>
+        <select id="fromSelectedOption" name="fromCurrency" asp-items="Model.FromCurrencies"></select>
+        <label>To</label>
+        <select id="toSelectedOption" name="toCurrency" asp-items="Model.ToCurrencies"></select>
+
+        <input type="submit" value="Filter" />
+    </div>
+</form>
+
+<table id="scrollTable">
+    <tr>
+        <td>Exchange Date</td>
+        <td>From Currency</td>
+        <td>To Currency</td>
+        <td>Exchange Rate</td>
+    </tr>
+</table>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    let page = 0;
+    function loadData() {
+        $.get('/CurrencyExchange/GetPage', { fromCurrency: document.getElementById("fromSelectedOption").value, toCurrency: document.getElementById("toSelectedOption").value, page: page }, function (response) {
+            $('#scrollTable').append(response);
+            page++;
+        });
+    }
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() >= $(document).height() - $(window).height() - 100) {
+            loadData();
+        }
+    });
+
+    loadData();
+
+</script>
